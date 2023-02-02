@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/webchat-demo/static/css/main.f641e4ba.css",
+    "main.js": "/webchat-demo/static/js/main.2e9f2f0d.js",
+    "static/js/787.a2274df5.chunk.js": "/webchat-demo/static/js/787.a2274df5.chunk.js",
+    "index.html": "/webchat-demo/index.html",
+    "static/media/index.cjs": "/webchat-demo/static/media/index.cd351d7c31d0d3fccf96.cjs",
+    "main.f641e4ba.css.map": "/webchat-demo/static/css/main.f641e4ba.css.map",
+    "main.2e9f2f0d.js.map": "/webchat-demo/static/js/main.2e9f2f0d.js.map",
+    "787.a2274df5.chunk.js.map": "/webchat-demo/static/js/787.a2274df5.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.f641e4ba.css",
+    "static/js/main.2e9f2f0d.js"
+  ]
+}
