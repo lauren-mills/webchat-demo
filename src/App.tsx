@@ -18,7 +18,7 @@ const SendActivityButton = () => {
 
 function App() {
   const store = useMemo(() => createStore({}, ({ dispatch }: any) => (next: (action: any) => void) => (action: any) => {
-    if (action.type === 'DIRECT_LINE/INCOMING_ACTIVITY' && action.payload.activity.type === 'event') {
+    if (action.type === 'DIRECT_LINE/INCOMING_ACTIVITY' && action.payload.activity.type === 'event' && action.payload.activity.from.role === 'bot') {
       const event = new CustomEvent('webchatincomingevent', { detail: action.payload.activity });
       window.dispatchEvent(event);
     }
