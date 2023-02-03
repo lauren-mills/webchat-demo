@@ -47,7 +47,7 @@ function App() {
 
   useEffect(() => {
     const handleIncomingEvent = (event: Event) => {
-      alert(`Received event names: ${(event as any).detail.name}!`);
+      alert(`Received event named: ${(event as any).detail.name}!`);
     };
 
     window.addEventListener('webchatincomingevent', handleIncomingEvent);
