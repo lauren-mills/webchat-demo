@@ -45,9 +45,17 @@ function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps 
   }, [])
 
-  window.addEventListener('webchatincomingevent', (event) => {
-    alert(`Received event: ${(event as any).detail.name}!`);
-  });
+  useEffect(() => {
+    const handleIncomingEvent = (event: Event) => {
+      alert(`Received event names: ${(event as any).detail.name}!`);
+    };
+
+    window.addEventListener('webchatincomingevent', handleIncomingEvent);
+
+    return () => {
+      window.removeEventListener('webchatincomingevent', handleIncomingEvent)
+    }
+  }, []);
 
   return (
     <div className="webchat_demo__container">
