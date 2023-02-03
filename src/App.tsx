@@ -1,8 +1,35 @@
-import  { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { Components, createDirectLine, createStore, hooks } from 'botframework-webchat';
 
-import ReactWebChat, { createDirectLine } from 'botframework-webchat';
+const { BasicWebChat, Composer } = Components;
+const { useSendMessage } = hooks;
+
+const SendActivityButton = () => {
+  const sendMessage = useSendMessage();
+
+  const handleHelpButtonClick = useCallback(() => sendMessage("I can't believe you updated the README 🙄"), [sendMessage]);
+
+  return (
+    <button onClick={handleHelpButtonClick} type="button">
+      Send Activity
+    </button>
+  );
+};
 
 function App() {
+  const store = useMemo(() => createStore({}, ({ dispatch }: any) => (next: (action: any) => void) => (action: any) => {
+    if (action.type === 'DIRECT_LINE/CONNECT_FULFILLED') {
+      dispatch({
+        type: 'WEB_CHAT/SEND_EVENT',
+        payload: {
+          name: 'webchat/join',
+          value: { language: window.navigator.language }
+        }
+      });
+    }
+
+    return next(action);
+  }), []);
   const [token, setToken] = useState<string | undefined>();
   const directLine = useMemo(() => createDirectLine({ token }), [token]);
 
@@ -26,7 +53,10 @@ function App() {
 
   return (
     <div className="webchat_demo__container">
-      <ReactWebChat directLine={directLine} />
+      <Composer directLine={directLine} store={store}>
+        <SendActivityButton />
+        <BasicWebChat />
+      </Composer>
     </div>
   );
 }
