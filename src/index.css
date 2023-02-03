@@ -12,7 +12,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-#root, .webchat_demo__container {
+#root {
   height: 100%;
 }
 
+.webchat_demo__container {
+  height: 95%;
+}

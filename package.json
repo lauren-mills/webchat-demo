@@ -13,6 +13,7 @@
     "@types/react-dom": "^17.0.14",
     "botframework-webchat": "4.15.6",
     "react": "^17.0.2",
+    "react-custom-events": "^1.1.1",
     "react-dom": "^17.0.2",
     "react-scripts": "5.0.0",
     "typescript": "^4.6.2",
