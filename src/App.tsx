@@ -58,7 +58,7 @@ function App() {
   useEffect(() => {
     (async () => {
       if (!abortSignal.signal.aborted) {
-        const res = await fetch('https://default72f988bf86f141af91ab2d7cd011db4.7.environment.api.test.powerplatform.com/powervirtualagents/botsbyschema/crbfe_ckk02142023/directline/token?api-version=2022-03-01-preview', { method: 'GET' });
+        const res = await fetch('https://9861205ea6d8e29fb2d423ce86811b4.b.environment.api.test.powerplatform.com/powervirtualagents/botsbyschema/cr7d1_lamilTeamsTest1/directline/token?api-version=2022-03-01-preview', { method: 'GET' });
         const { token } = await res.json();
         setToken(token)
       }
