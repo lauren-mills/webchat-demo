@@ -28,9 +28,7 @@ const SendInvokeButton = () => {
       id: 'u00001',
       role: 'user'
     },
-    localTimestamp: '2000-01-23T12:34:56.000Z', // Activity-in-transit must have local timestamp.
-    name: 'TestInvoke',
-    value: 'TestInvokeValue',
+    localTimestamp: Date.now().toLocaleString(), // Activity-in-transit must have local timestamp.
     type: 'invoke'
   }), [sendActivity]);
 
