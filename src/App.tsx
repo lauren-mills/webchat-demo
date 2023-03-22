@@ -2,9 +2,9 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Components, createDirectLine, createStore, hooks } from 'botframework-webchat';
 
 const { BasicWebChat, Composer } = Components;
-const { useSendEvent } = hooks;
+const { useSendEvent, usePostActivity } = hooks;
 
-const SendActivityButton = () => {
+const SendEventButton = () => {
   const sendEvent = useSendEvent();
 
   const handleHelpButtonClick = useCallback(() => sendEvent('testEvent', 'testValue'), [sendEvent]);
@@ -12,6 +12,31 @@ const SendActivityButton = () => {
   return (
     <button onClick={handleHelpButtonClick} type="button">
       Send Event
+    </button>
+  );
+};
+
+const SendInvokeButton = () => {
+  const sendActivity = usePostActivity();
+
+  const handleSendButtonClick = useCallback(() => sendActivity({
+    channelData: {
+      'webchat:send-status': 'sending',
+      'webchat:sequence-id': 0
+    },
+    from: {
+      id: 'u00001',
+      role: 'user'
+    },
+    localTimestamp: '2000-01-23T12:34:56.000Z', // Activity-in-transit must have local timestamp.
+    name: 'TestInvoke',
+    value: 'TestInvokeValue',
+    type: 'invoke'
+  }), [sendActivity]);
+
+  return (
+    <button onClick={handleSendButtonClick} type="button">
+      Send Invoke
     </button>
   );
 };
@@ -61,7 +86,8 @@ function App() {
     <div className="webchat_demo__container">
       <Composer directLine={directLine} store={store}>
         <BasicWebChat />
-        <SendActivityButton />
+        <SendEventButton />
+        <SendInvokeButton />
       </Composer>
     </div>
   );
