@@ -94,7 +94,7 @@ function App() {
         </Composer>
       }
       <div>
-        <input title="Direct Line URL" type="text" name="url" value={input} onChange={(e) => handleInputChange(e.target.value)} />
+        <input placeholder="Direct Line Token URL" title="Direct Line URL" type="text" name="url" value={input} onChange={(e) => handleInputChange(e.target.value)} />
         <button type="submit" onClick={() => updateUrl()}>Update</button>
       </div>
     </div>
