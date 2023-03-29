@@ -73,7 +73,7 @@ function App() {
     (async () => {
       if (input) {
         try {
-          const res = await fetch(new URL(input), { method: 'GET' });
+          const res = await fetch(input as RequestInfo, { method: 'GET' });
           const { token } = await res.json();
           setToken(token)
         }
