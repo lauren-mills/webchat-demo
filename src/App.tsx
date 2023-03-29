@@ -53,23 +53,6 @@ function App() {
   const [input, setInput] = useState<string | undefined>();
   const directLine = useMemo(() => createDirectLine({ token }), [token]);
 
-  // const abortSignal = useRef(new AbortController()).current;
-
-  // useEffect(() => {
-  //   (async () => {
-  //     if (!abortSignal.signal.aborted && url) {
-  //       const res = await fetch(url, { method: 'GET' });
-  //       const { token } = await res.json();
-  //       setToken(token)
-  //     }
-  //   })();
-
-  //   return () => {
-  //     abortSignal.abort();
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps 
-  // }, [url])
-
   useEffect(() => {
     const handleIncomingEvent = (event: Event) => {
       alert(`Received event named: ${(event as any).detail.name}!`);
@@ -109,7 +92,7 @@ function App() {
         <SendInvokeButton />
         <div>
           <input title="Direct Line URL" type="text" name="url" value={input} onChange={(e) => handleInputChange(e.target.value)}/>
-          <button onClick={() => updateUrl()}>Update</button>
+          <button type="submit" onClick={() => updateUrl()}>Update</button>
         </div>
       </Composer>
     </div>
