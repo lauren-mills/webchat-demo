@@ -4,6 +4,7 @@ import { Components, createDirectLine, createStore, hooks } from 'botframework-w
 const { BasicWebChat, Composer } = Components;
 const { useSendEvent, usePostActivity } = hooks;
 
+
 const SendEventButton = () => {
   const sendEvent = useSendEvent();
 
@@ -49,14 +50,16 @@ function App() {
     return next(action);
   }), []);
   const [token, setToken] = useState<string | undefined>();
+  const [input, setInput] = useState<string | undefined>();
+  const [url, setUrl] = useState<string | undefined>();
   const directLine = useMemo(() => createDirectLine({ token }), [token]);
 
   const abortSignal = useRef(new AbortController()).current;
 
   useEffect(() => {
     (async () => {
-      if (!abortSignal.signal.aborted) {
-        const res = await fetch('https://9861205ea6d8e29fb2d423ce86811b4.b.environment.api.test.powerplatform.com/powervirtualagents/botsbyschema/cr7d1_lamilTeamsTest4/directline/token?api-version=2022-03-01-preview', { method: 'GET' });
+      if (!abortSignal.signal.aborted && url) {
+        const res = await fetch('url', { method: 'GET' });
         const { token } = await res.json();
         setToken(token)
       }
@@ -66,7 +69,7 @@ function App() {
       abortSignal.abort();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps 
-  }, [])
+  }, [url])
 
   useEffect(() => {
     const handleIncomingEvent = (event: Event) => {
@@ -80,12 +83,24 @@ function App() {
     }
   }, []);
 
+  const handleInputChange = useCallback((url: string) => {
+    setInput(url);
+  }, []);
+
+  const updateUrl = useCallback(() => {
+    setUrl(input);    
+  }, [input]);
+
   return (
     <div className="webchat_demo__container">
       <Composer directLine={directLine} store={store}>
         <BasicWebChat />
         <SendEventButton />
         <SendInvokeButton />
+        <div>
+          <input title="Direct Line URL" type="text" name="url" value={url} onChange={(e) => handleInputChange(e.target.value)}/>
+          <button onClick={() => updateUrl()}>Update</button>
+        </div>
       </Composer>
     </div>
   );
