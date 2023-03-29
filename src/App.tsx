@@ -59,7 +59,7 @@ function App() {
   useEffect(() => {
     (async () => {
       if (!abortSignal.signal.aborted && url) {
-        const res = await fetch('url', { method: 'GET' });
+        const res = await fetch(url, { method: 'GET' });
         const { token } = await res.json();
         setToken(token)
       }
