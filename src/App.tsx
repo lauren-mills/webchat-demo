@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Components, createDirectLine, createStore, hooks } from 'botframework-webchat';
 
 const { BasicWebChat, Composer } = Components;
@@ -51,25 +51,24 @@ function App() {
   }), []);
   const [token, setToken] = useState<string | undefined>();
   const [input, setInput] = useState<string | undefined>();
-  const [url, setUrl] = useState<string | undefined>();
   const directLine = useMemo(() => createDirectLine({ token }), [token]);
 
-  const abortSignal = useRef(new AbortController()).current;
+  // const abortSignal = useRef(new AbortController()).current;
 
-  useEffect(() => {
-    (async () => {
-      if (!abortSignal.signal.aborted && url) {
-        const res = await fetch(url, { method: 'GET' });
-        const { token } = await res.json();
-        setToken(token)
-      }
-    })();
+  // useEffect(() => {
+  //   (async () => {
+  //     if (!abortSignal.signal.aborted && url) {
+  //       const res = await fetch(url, { method: 'GET' });
+  //       const { token } = await res.json();
+  //       setToken(token)
+  //     }
+  //   })();
 
-    return () => {
-      abortSignal.abort();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps 
-  }, [url])
+  //   return () => {
+  //     abortSignal.abort();
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps 
+  // }, [url])
 
   useEffect(() => {
     const handleIncomingEvent = (event: Event) => {
@@ -88,7 +87,18 @@ function App() {
   }, []);
 
   const updateUrl = useCallback(() => {
-    setUrl(input);    
+    (async () => {
+      if (input) {
+        try {
+          const res = await fetch(new URL(input), { method: 'GET' });
+          const { token } = await res.json();
+          setToken(token)
+        }
+        catch (e) {
+          console.log(e);
+        }
+      }
+    })();  
   }, [input]);
 
   return (
@@ -98,7 +108,7 @@ function App() {
         <SendEventButton />
         <SendInvokeButton />
         <div>
-          <input title="Direct Line URL" type="text" name="url" value={url} onChange={(e) => handleInputChange(e.target.value)}/>
+          <input title="Direct Line URL" type="text" name="url" value={input} onChange={(e) => handleInputChange(e.target.value)}/>
           <button onClick={() => updateUrl()}>Update</button>
         </div>
       </Composer>
