@@ -81,20 +81,22 @@ function App() {
           console.log(e);
         }
       }
-    })();  
+    })();
   }, [input]);
 
   return (
     <div className="webchat_demo__container">
-      <Composer directLine={directLine} store={store}>
-        <BasicWebChat />
-        <SendEventButton />
-        <SendInvokeButton />
-        <div>
-          <input title="Direct Line URL" type="text" name="url" value={input} onChange={(e) => handleInputChange(e.target.value)}/>
-          <button type="submit" onClick={() => updateUrl()}>Update</button>
-        </div>
-      </Composer>
+      {directLine &&
+        <Composer directLine={directLine} store={store}>
+          <BasicWebChat />
+          <SendEventButton />
+          <SendInvokeButton />
+        </Composer>
+      }
+      <div>
+        <input title="Direct Line URL" type="text" name="url" value={input} onChange={(e) => handleInputChange(e.target.value)} />
+        <button type="submit" onClick={() => updateUrl()}>Update</button>
+      </div>
     </div>
   );
 }
